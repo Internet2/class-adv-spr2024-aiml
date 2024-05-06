@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "kind": {
+            "value": "Default"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "workspaceName": {
+            "value": "internet2-ml"
+        },
+        "resourceGroupName": {
+            "value": "internet2-ml-ai"
+        },
+        "sku": {
+            "value": "Basic"
+        },
+        "tagValues": {
+            "value": {}
+        },
+        "keyVaultName": {
+            "value": "internet2ml2826588790"
+        },
+        "storageAccountName": {
+            "value": "internet2ml3174302151"
+        },
+        "appInsightsLogWorkspaceName": {
+            "value": "internet2ml2413471957"
+        },
+        "applicationInsightsName": {
+            "value": "internet2ml8424520871"
+        },
+        "storageAccountOption": {
+            "value": "new"
+        },
+        "storageAccountHnsEnabled": {
+            "value": false
+        },
+        "keyVaultOption": {
+            "value": "new"
+        },
+        "applicationInsightsOption": {
+            "value": "new"
+        },
+        "containerRegistryOption": {
+            "value": "existing"
+        },
+        "containerRegistryName": {
+            "value": "mltestingregistry"
+        },
+        "containerRegistrySku": {
+            "value": "Standard"
+        },
+        "containerRegistryLocation": {
+            "value": "eastus2"
+        },
+        "containerRegistryResourceGroupName": {
+            "value": "testing-ml"
+        },
+        "managedNetwork": {
+            "value": {
+                "isolationMode": "Disabled"
+            }
+        },
+        "identityType": {
+            "value": "systemAssigned"
+        },
+        "publicNetworkAccess": {
+            "value": "Enabled"
+        }
+    }
+}
