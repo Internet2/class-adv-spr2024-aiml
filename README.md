@@ -52,3 +52,5 @@ Pending per finalizing of project direction and scope.
 - [Azure Machine Learning homepage](https://azure.microsoft.com/en-us/products/machine-learning)
 - [What is Azure Machine Learning?](https://learn.microsoft.com/en-us/azure/machine-learning/overview-what-is-azure-machine-learning)
 - [Quickstart: Get started with Azure Machine Learning](https://learn.microsoft.com/en-us/azure/machine-learning/tutorial-azure-ml-in-a-day)
+
+- update from dj
