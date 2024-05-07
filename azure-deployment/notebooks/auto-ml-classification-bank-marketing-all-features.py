@@ -51,7 +51,7 @@
 
 # In[ ]:
 
-
+print("Starting run!")
 import json
 import logging
 
@@ -66,7 +66,14 @@ from azureml.core.dataset import Dataset
 from azureml.train.automl import AutoMLConfig
 from azureml.interpret import ExplanationClient
 
+## Pull in a couple env variables to make testing with various sizes easier
+## These can be changed by running the script from a terminal tab with:
+## $ VM_SIZE=STANDARD_DS12_V2 MAX_NODES=2 python ./run.py
+vm_size = os.getenv("VM_SIZE", "STANDARD_DS12_V2")
+max_nodes = os.getenv("MAX_NODES", 6)
+cpu_cluster_name = f"{vm_size}-{max_nodes}".replace("_", "-")
 
+print(f"Going to run this on the VM {vm_size} with {max_nodes} max nodes")
 # This sample notebook may use features that are not available in previous versions of the Azure ML SDK.
 
 # Accessing the Azure ML workspace requires authentication with Azure.
@@ -127,16 +134,13 @@ outputDf.T
 from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
 
-# Choose a name for your CPU cluster
-cpu_cluster_name = "cpu-cluster-4"
-
 # Verify that cluster does not exist already
 try:
     compute_target = ComputeTarget(workspace=ws, name=cpu_cluster_name)
     print("Found existing cluster, use it.")
 except ComputeTargetException:
     compute_config = AmlCompute.provisioning_configuration(
-        vm_size="STANDARD_DS12_V2", max_nodes=6
+        vm_size=vm_size, max_nodes=int(max_nodes)
     )
     compute_target = ComputeTarget.create(ws, cpu_cluster_name, compute_config)
 compute_target.wait_for_completion(show_output=True)
