@@ -13,3 +13,5 @@ JupyterLab instance Kubernetes orchestration
 
 ML/AI Expert
 - Write something that breaks the ML/AI thing out
+
+Also maybe cost analysis?

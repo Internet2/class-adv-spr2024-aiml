@@ -1,0 +1,5 @@
+Used the following command to convert notebook to python
+
+```bash
+$ jupyter nbconvert --to script auto-ml-classification-bank-marketing-all-features.ipynb
+```
