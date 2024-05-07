@@ -21,4 +21,8 @@ ResNet-50 is a convolutional neural network that is 50 layers deep. We loaded a 
 
 Gallery with images from Imagenet (to test our image classification tool) 
 - https://github.com/EliSchwartz/imagenet-sample-images/blob/master/gallery.md
-- Flask, kubernetes, 
+
+TOOLS
+- Flask
+- Kubernetes
+- 
