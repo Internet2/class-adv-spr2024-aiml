@@ -3,8 +3,27 @@ from flask import Flask, request, jsonify
 from PIL import Image
 import numpy as np
 import tensorflow as tf
+import keras
 from tensorflow.keras.applications import ResNet50
-from keras.applications.vgg16 import decode_predictions
+# from tensorflow.keras.applications.resnet50 import  decode_predictions
+# from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
+from keras.applications.resnet50 import preprocess_input, decode_predictions
+# from keras.applications.vgg16 import decode_predictions
+import platform
+
+
+###
+## added processing status
+import paho.mqtt.client as mqtt
+from paho.mqtt import client as mqtt_client
+
+# MQTT Broker information
+broker_address = "broker.emqx.io"
+broker_port = 1883  # Default MQTT port
+topic = "ml-status"
+
+client = mqtt.Client(mqtt_client.CallbackAPIVersion.VERSION1, "Python_Client")
+client.connect(broker_address, broker_port)
 
 
 # Initialize Flask application
@@ -15,10 +34,29 @@ app = Flask(__name__)
 
 model = ResNet50(weights = 'imagenet')
 
-# model = tf.keras.models.load_model('model.h5')
+from werkzeug.utils import secure_filename
+import os 
+
 
 # Define image preprocessing function
 def preprocess_image(image_path):
+
+    filename = secure_filename(image_path.filename)
+    upload_directory = ''
+    file_path = os.path.join(upload_directory, filename)
+    image_path.save(file_path)
+    
+    # img = keras.utils.load_img(image_path, target_size=(224, 224))
+    img = keras.utils.load_img(file_path, target_size=(224, 224))
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    x = keras.utils.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+    return x
+
+
     img = Image.open(image_path)
     img = img.resize((224, 224))  # Assuming input size of your model
     img_array = np.array(img) / 255.0  # Normalize pixel values
@@ -53,10 +91,18 @@ def classify_image():
     label = decode_predictions(prediction)
     print(label)
     print("the correct number is ")
+    # displaying the hostname of the device 
+    # using the platform.node()python
+    print("The hostname that processed this image was ",platform.node())
+
+
     # print (label[0][0])
     print (label[0][0][1])
     print (label[0][0][2])
-    return jsonify({'label': str(label[0][0][1]), 'confidence': str(label[0][0][2]) })
+    
+    client.publish(topic, 'label : ' + str(label[0][0][1]) + ' confidence : ' + str(label[0][0][2]) + ' processed by : ' + platform.node())
+
+    return jsonify({'label': str(label[0][0][1]), 'confidence': str(label[0][0][2]) , 'processed by' : platform.node()})
     # return "returned"
 
 # Run the Flask application
