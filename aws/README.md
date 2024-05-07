@@ -6,12 +6,6 @@ PROJECT PLAN and PROCEDURE
 - 
 
 
-- Initial model utilized:
-
-ResNet-50 is a convolutional neural network that is 50 layers deep. We loaded a pretrained version of the neural network trained on more than a million images from the ImageNet database
-
-Gallery with images from Imagenet (to test our image classification tool) 
-- https://github.com/EliSchwartz/imagenet-sample-images/blob/master/gallery.md
 
 INTERNAL NOTES and LINKS
 - https://github.com/Internet2/class-adv-spr2024-aiml
@@ -21,4 +15,10 @@ INTERNAL NOTES and LINKS
 - https://aws.amazon.com/tutorials/train-deep-learning-model-aws-ec2-containers/
 - https://aws.amazon.com/machine-learning/containers/
 
+- Initial model utilized:
+
+ResNet-50 is a convolutional neural network that is 50 layers deep. We loaded a pretrained version of the neural network trained on more than a million images from the ImageNet database
+
+Gallery with images from Imagenet (to test our image classification tool) 
+- https://github.com/EliSchwartz/imagenet-sample-images/blob/master/gallery.md
 - Flask, kubernetes, 
