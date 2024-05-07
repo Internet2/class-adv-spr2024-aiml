@@ -29,6 +29,7 @@ graph LR;
   azml -->compute[Compute Node]
   compute -->computeC[Compute Cluster]
   computeC --Writes-->results
+  data --Reads--> computeC
   subgraph sa[Storage Account]
     results[Results]
     data[Data Sets]
