@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live MQTT Data</title>
+    <style>
+        #status {
+            overflow-y: scroll;
+            height: 600px; /* Set a fixed height for the status div */
+        }
+    </style>
+</head>
+<body>
+    <h1>Live MQTT Data</h1>
+    <div id="status"></div>
+    <p>Average messages per second: <span id="averageMessageRate">0</span></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <script>
+        // MQTT Broker information
+        var broker = {
+            hostname: "broker.emqx.io",
+            port: 8083, // Default MQTT over WebSocket port
+            path: "/mqtt" // Default WebSocket path for EMQ X Broker
+        };
+
+        // MQTT client
+        var client = new Paho.MQTT.Client(broker.hostname, broker.port, broker.path, "web_" + parseInt(Math.random() * 100, 10));
+
+        // Variables for message rate calculation
+        var startTime = new Date().getTime(); // Start time
+        var totalMessages = 0; // Total number of messages
+
+        // Callback function for when the connection is established
+        function onConnect() {
+            console.log("Connected to MQTT broker");
+            client.subscribe("ml-status");
+            // Start calculating average message rate
+            setInterval(updateAverageMessageRate, 1000); // Update every second
+        }
+
+        // Update average message rate
+        function updateAverageMessageRate() {
+            var currentTime = new Date().getTime();
+            var elapsedTime = (currentTime - startTime) / 1000; // Elapsed time in seconds
+            var averageMessageRate = totalMessages / elapsedTime;
+            document.getElementById("averageMessageRate").textContent = averageMessageRate.toFixed(2);
+        }
+
+        // Callback function for when a message is received
+        function onMessageArrived(message) {
+            console.log("Received message:", message.payloadString);
+            var statusDiv = document.getElementById("status");
+            var messageDiv = document.createElement("div");
+            messageDiv.textContent = "Status: " + message.payloadString;
+            statusDiv.appendChild(messageDiv);
+            // Scroll to the bottom
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+
+            // Increment total number of messages
+            totalMessages++;
+        }
+
+        // Callback function for when the connection is lost
+        function onConnectionLost(responseObject) {
+            if (responseObject.errorCode !== 0) {
+                console.log("Connection lost:", responseObject.errorMessage);
+            }
+        }
+
+        // Set up event handlers
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        // Connect to MQTT broker
+        client.connect({
+            onSuccess: onConnect,
+            useSSL: false // Change to true if your MQTT broker uses SSL
+        });
+    </script>
+</body>
+</html>
