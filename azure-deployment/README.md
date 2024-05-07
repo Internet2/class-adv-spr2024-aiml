@@ -22,14 +22,17 @@ graph TD;
 
 ```mermaid
 graph LR;
-  scientist[Data Scientist] --Git--> repo[Pipeline Repository\non GitHub]
+  scientist[🙋‍♀️ Data Scientist] --Git--> repo[Pipeline Repository\non GitHub]
   scientist -->azml
   scientist --Copy In-->data
-  repo --> azml[Azure Machine\nLearning Workspace]
-  azml -->compute[Compute Node]
-  compute -->computeC[Compute Cluster]
+  subgraph azml[Azure Machine\nLearning Workspace]
+    compute[Compute Node]
+    computeC[Compute Cluster]
+  end
+  repo --> azml
+  compute[Compute Node ] -->computeC[Compute Cluster]
   computeC --Writes-->results
-  data --Reads--> computeC
+  computeC <--Reads--> data
   subgraph sa[Storage Account]
     results[Results]
     data[Data Sets]

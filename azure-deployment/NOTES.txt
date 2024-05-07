@@ -3,3 +3,5 @@ Used the following command to convert notebook to python
 ```bash
 $ jupyter nbconvert --to script auto-ml-classification-bank-marketing-all-features.ipynb
 ```
+
+Still needed to remove certain python code pieces that don't work when not running in a notebook
