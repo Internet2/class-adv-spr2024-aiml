@@ -270,6 +270,7 @@ automl_config = AutoMLConfig(
     training_data=train_data,
     label_column_name=label,
     validation_data=validation_dataset,
+    show_output=True,
     **automl_settings,
 )
 
@@ -330,9 +331,9 @@ pd.DataFrame.from_records(records)
 # In[ ]:
 
 
-from azureml.widgets import RunDetails
-
-RunDetails(remote_run).show()
+# NOTE: This appears to just be relevant for running inside of a jupyterlab notebook
+# from azureml.widgets import RunDetails
+# RunDetails(remote_run).show()
 
 
 # ### Retrieve the Best Model's explanation
@@ -448,7 +449,7 @@ else:
 # In[ ]:
 
 
-get_ipython().run_line_magic('pinfo2', 'remote_run.get_best_child')
+# get_ipython().run_line_magic('pinfo2', 'remote_run.get_best_child')
 
 
 # #### Widget for Monitoring Runs
