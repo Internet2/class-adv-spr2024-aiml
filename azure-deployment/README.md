@@ -7,14 +7,18 @@
 ### Provisioning
 ```mermaid
 graph TD;
-   tf[Terraform]-->azml[Azure Machine\nLearning Workspace];
-   tf -->azsa[Storage Account];
-   tf -->misc[Misc. Azure Utils];
-   azsa -->results[Results]
-   azsa -->datasets[Data Sets]
-   misc --> kv[Key Vault]
-   misc --> logs[Log Analytics]
-   misc --> insights[Application\nInsights]
+   tf[Terraform]--builds-->azml[Azure Machine\nLearning Workspace];
+   tf --builds-->sa;
+   tf --builds-->misc;
+   subgraph sa[Storage Account]
+     results[Results]
+     datasets[Data Sets]
+   end
+   subgraph misc[Misc. Azure Utils]
+     kv[Key Vault]
+     logs[Log Analytics]
+     insights[Application\nInsights]
+   end
 
 ```
 
@@ -22,7 +26,7 @@ graph TD;
 
 ```mermaid
 graph LR;
-  scientist[🙋‍♀️ Data Scientist] --Git--> repo[Pipeline Repository\non GitHub]
+  scientist[🙋‍♀️👩‍🔬🧑‍💻 Data Scientists] --Git Push--> repo[Pipeline Repository\non GitHub]
   scientist -->azml
   scientist --Copy In-->data
   subgraph azml[Azure Machine\nLearning Workspace]
