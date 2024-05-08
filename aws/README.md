@@ -18,6 +18,7 @@
 ### Notes
 - Gallery with images from Imagenet (to test our image classification tool) https://github.com/EliSchwartz/imagenet-sample-images/blob/master/gallery.md
 - https://github.com/Internet2/class-adv-spr2024-aiml
+- https://keras.io/api/applications/
 - https://github.com/asitkdash/Object-Detection-Using-Keras/blob/master/object%20detection%20using%20keras.ipynb
 - https://paperswithcode.com/datasets?task=object-detection
 - https://cocodataset.org/#home
