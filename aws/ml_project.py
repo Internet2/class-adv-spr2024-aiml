@@ -62,6 +62,11 @@ def preprocess_image(image_path):
     img_array = np.array(img) / 255.0  # Normalize pixel values
     return np.expand_dims(img_array, axis=0)  # Add batch dimension
 
+@app.route('/')
+def health_check():
+    return 'Server is Healthy'
+
+
 # Define route for image classification
 @app.route('/classify_image', methods=['POST'])
 def classify_image():
