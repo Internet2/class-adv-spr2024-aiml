@@ -2,8 +2,6 @@
 
 ## Architecture
 
-🏆 Worlds Ugliest Diagrams 🏆
-
 ### Provisioning
 ```mermaid
 graph TD;
