@@ -10,6 +10,7 @@
 
 
 
+<img src="./elb-tutorial-architecture-diagram.png" alt="Diagram" width="600"/>
 
 
 
