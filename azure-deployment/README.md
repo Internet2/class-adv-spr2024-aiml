@@ -7,9 +7,12 @@
 ### Provisioning
 ```mermaid
 graph TD;
-   tf[Terraform]--builds-->azml[Azure Machine\nLearning Workspace];
+   tf[Terraform]--builds-->azml;
    tf --builds-->sa;
    tf --builds-->misc;
+   subgraph azml[Azure Machine Learning Workspace]
+     subclust[Job Submission\nCluster]
+   end
    subgraph sa[Storage Account]
      results[Results]
      datasets[Data Sets]
@@ -34,7 +37,7 @@ graph LR;
     computeC[Compute Cluster]
   end
   repo --> azml
-  compute[Compute Node ] -->computeC[Compute Cluster]
+  compute[Job Submission\nCluster] -. generates .->computeC[Short Lived\nCompute Cluster]
   computeC --Writes-->results
   computeC <--Reads--> data
   subgraph sa[Storage Account]
