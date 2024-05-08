@@ -251,7 +251,7 @@ automl_settings = {
     "experiment_timeout_hours": 0.3,
     "enable_early_stopping": True,
     "iteration_timeout_minutes": 5,
-    "max_concurrent_iterations": 4,
+    "max_concurrent_iterations": int(max_nodes),
     "max_cores_per_iteration": -1,
     # "n_cross_validations": 2,
     "primary_metric": "AUC_weighted",
