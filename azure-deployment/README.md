@@ -30,15 +30,17 @@ graph LR;
   scientist[🙋‍♀️👩‍🔬🧑‍💻 Data Scientists] --Git Push--> repo[Pipeline Repository\non GitHub]
   scientist -->azml
   scientist --Copy In-->data
-  subgraph azml[Azure Machine\nLearning Workspace]
+  subgraph azml[Azure Machine Learning Workspace]
     compute[Compute Node]
     subgraph computeC[Compute Cluster]
       computeP[Prebuilt]
-      computeD[Dynamically Built]
+      computeD[Dynamic]
     end
   end
   repo --> azml
-  compute[Job Submission\nCluster] -. generates .->computeC[Short Lived\nCompute Cluster]
+  compute[Job Submission\nCluster] -. generate .->computeD
+  compute[Job Submission\nCluster] -. utilize .->computeP
+
   computeC --Writes-->results
   computeC <--Reads--> data
   subgraph sa[Storage Account]
