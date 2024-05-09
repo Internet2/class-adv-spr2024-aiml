@@ -248,7 +248,7 @@ test_dataset = Dataset.Tabular.from_delimited_files(test_data)
 
 
 automl_settings = {
-    "experiment_timeout_hours": 0.3,
+    "experiment_timeout_hours": 1.00,
     "enable_early_stopping": True,
     "iteration_timeout_minutes": 5,
     "max_concurrent_iterations": int(max_nodes),

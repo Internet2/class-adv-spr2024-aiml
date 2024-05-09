@@ -32,7 +32,10 @@ graph LR;
   scientist --Copy In-->data
   subgraph azml[Azure Machine\nLearning Workspace]
     compute[Compute Node]
-    computeC[Compute Cluster]
+    subgraph computeC[Compute Cluster]
+      computeP[Prebuilt]
+      computeD[Dynamically Built]
+    end
   end
   repo --> azml
   compute[Job Submission\nCluster] -. generates .->computeC[Short Lived\nCompute Cluster]
