@@ -5,3 +5,8 @@ $ jupyter nbconvert --to script auto-ml-classification-bank-marketing-all-featur
 ```
 
 Still needed to remove certain python code pieces that don't work when not running in a notebook
+
+10x nodes 27m run
+20x nodes 33m run
+ 5x nodes 31m run
+ 2x nodes 31m run
