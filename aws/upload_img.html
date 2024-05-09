@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #uploadedImage {
+            max-width: 300px;
+            margin-top: 10px;
+        }
+        #response {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Classification</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" onchange="showImage()">
+        <button type="button" onclick="uploadImage()">Upload</button>
+    </form>
+    <div id="output"></div>
+    <img id="uploadedImage" src="#" alt="Uploaded Image" style="display:none;">
+    <div id="response"></div>
+
+    <script>
+        function showImage() {
+            var fileInput = document.getElementById('fileInput');
+            var uploadedImage = document.getElementById('uploadedImage');
+            if (fileInput.files && fileInput.files[0]) {
+                uploadedImage.style.display = 'block';
+                uploadedImage.src = URL.createObjectURL(fileInput.files[0]);
+                uploadedImage.onload = function() {
+                    URL.revokeObjectURL(this.src);
+                }
+            }
+        }
+
+        function uploadImage() {
+            var formData = new FormData();
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            formData.append('file', file);
+
+            fetch('http://images-lb-1024619852.us-east-1.elb.amazonaws.com:80/classify_image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('response').textContent = 'Classification: ' + data.label + ', Confidence: ' + data.confidence + ', Processed by: ' + data.processed_by;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').textContent = 'Failed to classify image. See console for more details.';
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
