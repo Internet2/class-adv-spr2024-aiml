@@ -1,5 +1,6 @@
 # Import necessary libraries
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from PIL import Image
 import numpy as np
 import tensorflow as tf
@@ -28,7 +29,7 @@ client.connect(broker_address, broker_port)
 
 # Initialize Flask application
 app = Flask(__name__)
-
+CORS(app) 
 # Load your trained machine learning model
 
 
@@ -94,6 +95,7 @@ def classify_image():
 
 
     label = decode_predictions(prediction)
+    # decoded_predictions = decode_predictions(prediction)
     print(label)
     print("the correct number is ")
     # displaying the hostname of the device 
@@ -105,10 +107,21 @@ def classify_image():
     print (label[0][0][1])
     print (label[0][0][2])
     
-    client.publish(topic, 'label : ' + str(label[0][0][1]) + ' confidence : ' + str(label[0][0][2]) + ' processed by : ' + platform.node())
+    # client.publish(topic, 'label : ' + str(label[0][0][1]) + ' confidence : ' + str(label[0][0][2]) + ' processed by : ' + platform.node())
 
-    return jsonify({'label': str(label[0][0][1]), 'confidence': str(label[0][0][2]) , 'processed by' : platform.node()})
+    # return jsonify({'label': str(label[0][0][1]), 'confidence': str(label[0][0][2]) , 'processed by' : platform.node()})
     # return "returned"
+
+    response_data = {
+        'label': label[0][0][1],  # Most likely label
+        'confidence': float(label[0][0][2]),  # Confidence of the prediction
+        'processed_by': platform.node()
+    }
+    print(response_data)
+    client.publish(topic, f"Processed by: {platform.node()}, Label: {response_data['label']}, Confidence: {response_data['confidence']}")
+
+    return jsonify(response_data)
+
 
 # Run the Flask application
 if __name__ == '__main__':
