@@ -27,19 +27,26 @@ graph TD;
 
 ```mermaid
 graph LR;
-  scientist[🙋‍♀️👩‍🔬🧑‍💻 Data Scientists] --Git Push--> repo[Pipeline Repository\non GitHub]
-  scientist -->azml
+  style scientist text-align:left
+  style azml text-align:center
+  scientist[🙋‍♀️\n👩‍🔬 Data Scientists\n🧑‍💻] --Git Push--> repo[Pipeline Repository\non GitHub]
+  scientist --interactive-->studio
   scientist --Copy In-->data
-  subgraph azml[Azure Machine Learning Workspace]
+  subgraph azml[Azure Machine Learning Workspace\nPaaS]
+    studio[Azure ML Studio\nJupyter Notebooks]
     compute[Compute Node]
+    style computeC fill:#F77,stroke:#F00,stroke-width:2px
+    style computeP text-align:left
     subgraph computeC[Compute Cluster]
-      computeP[Prebuilt]
+      computeP[Prebuilt\n - small\n - medium\n - large]
       computeD[Dynamic]
     end
   end
-  repo --> azml
+  repo --> compute
   compute[Job Submission\nCluster] -. generate .->computeD
-  compute[Job Submission\nCluster] -. utilize .->computeP
+  compute -. utilize .->computeP
+
+  studio -->compute
 
   computeC --Writes-->results
   computeC <--Reads--> data
